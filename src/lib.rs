@@ -11,7 +11,7 @@ use std::path::PathBuf;
 
 pub type Result<T> = result::Result<T, Error>;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum Error {
     InvalidInput,
     IoError,
@@ -58,7 +58,7 @@ impl <T>From<nom::Err<T>> for Error {
 }
 
 /// Represents the privacy of a mapping.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum Privacy {
     /// This mapping is shared
     Shared,
@@ -67,7 +67,7 @@ pub enum Privacy {
 }
 
 /// Represents the permissions of for a memory mapping.
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Permissions {
     pub readable: bool,
     pub writable: bool,
@@ -102,7 +102,7 @@ impl Permissions {
 
 /// This enum represents the pathname field of a given process.
 /// Usually this is a file that backs up a given mapping.
-#[derive(PartialEq, Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum Path {
     /// A file backs up this mapping
     MappedFile(String),
@@ -137,7 +137,7 @@ impl From<&str> for Path {
 
 /// Holds data for a given memory mapped region.
 /// [For more information.](http://man7.org/linux/man-pages/man5/proc.5.html)
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Map {
     /// Base of mapped region in process
     pub base: usize,
@@ -205,7 +205,7 @@ named!(parse_map<&str, Map>,
 
 
 /// A collection of memory mapped regions.
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Mappings(Vec<Map>);
 
 impl Mappings {
